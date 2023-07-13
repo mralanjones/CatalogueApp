@@ -34,6 +34,6 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
-migrator.ListMigrations();
+migrator.MigrateUp();
 
 app.Run();
