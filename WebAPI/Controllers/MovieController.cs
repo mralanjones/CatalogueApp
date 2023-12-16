@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
+using WebAPI.Services.MovieService;
 
 namespace WebAPI.Controllers
 {
@@ -8,76 +8,61 @@ namespace WebAPI.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private static List<Movie> movies = new List<Movie>
-            {
-                new Movie
-                {
-                    MovieId = 1,
-                    Name = "The Matrix",
-                    Year = 1999
-                },
-                new Movie
-                {
-                    MovieId = 2,
-                    Name = "Goodfellas",
-                    Year = 1999
-                },
-                new Movie
-                {
-                    MovieId = 3,
-                    Name = "Gladiator",
-                    Year = 2000
-                }
-            };
+        private readonly IMovieService _movieService;
+
+        public MovieController(IMovieService movieService) {
+            _movieService = movieService;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<Movie>>> GetAllMovies()
         {
-            return Ok(movies);
+            return _movieService.GetAllMovies();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovieById(int id)
         {
-            return Ok(movies.Find(x => x.MovieId == id));
+            var result = _movieService.GetMovieById(id);
+
+            if (result == null)
+            {
+                return NotFound("Movie not found.");
+            }
+
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<List<Movie>>> AddMovie(Movie movie)
         {
-            movies.Add(movie);
-
-            return Ok(movies);
+            return _movieService.AddMovie(movie);
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Movie>>> UpdateMovie(int movieId, Movie request)
         {
-            var movie = movies.Find(x => x.MovieId == movieId);
+            var result = _movieService.UpdateMovie(movieId, request);
 
-            if (movie == null) {
-                return NotFound("Movie not found.");
+            if (result == null)
+            {
+                return NotFound("Movie not found. Could not update.");
             }
-            movie.Name = request.Name;
-            movie.Year = request.Year;
-            movie.MovieGenres = request.MovieGenres;
 
-            return Ok(movies);
+            return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<ActionResult<List<Movie>>> DeleteMovie(Movie request)
+        public async Task<ActionResult<List<Movie>>> DeleteMovie(int movieId)
         {
-            var movie = movies.Find(x => x.MovieId == request.MovieId);
+            var result = _movieService.DeleteMovie(movieId);
 
-            if (movie == null)
+            if (result == null)
             {
-                return NotFound("Movie not found.");
+                return NotFound("Movie not found. Could not delete.");
             }
-            
-            movies.Remove(movie);
 
-            return Ok(movies);
+            return Ok(result);
         }
     }
 }

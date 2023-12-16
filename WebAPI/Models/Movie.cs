@@ -8,6 +8,6 @@ namespace WebAPI.Models
         public int MovieId { get; set; }
         public string Name { get; set; } = null!;
         public int Year { get; set; }
-        public ICollection<MovieGenre> ?MovieGenres { get; set; }
+        //public ICollection<MovieGenre> ?MovieGenres { get; set; }
     }
 }
