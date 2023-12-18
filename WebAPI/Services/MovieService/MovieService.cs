@@ -2,62 +2,55 @@
 {
     public class MovieService : IMovieService
     {
-        private static List<Movie> movies = new List<Movie>
-        {
-            new Movie
-            {
-                MovieId = 1,
-                Name = "The Matrix",
-                Year = 1999
-            },
-            new Movie
-            {
-                MovieId = 2,
-                Name = "Goodfellas",
-                Year = 1999
-            },
-            new Movie
-            {
-                MovieId = 3,
-                Name = "Gladiator",
-                Year = 2000
-            }
-        };
+        private readonly DataContext _context;
 
-        public List<Movie> AddMovie(Movie movie)
+        public MovieService(DataContext context)
         {
-            movies.Add(movie);
-
-            return movies;
+            _context = context;
         }
 
-        public List<Movie> DeleteMovie(int movieId)
+        public async Task<Movie> AddMovie(Movie movie)
         {
-            var movie = movies.Find(x => x.MovieId == movieId);
+            _context.Movies.Add(movie);
+            await _context.SaveChangesAsync();
+
+            return movie;
+        }
+
+        public async Task<int> DeleteMovie(int movieId)
+        {
+            var movie = await _context.Movies.FindAsync(movieId);
 
             if (movie == null)
             {
-                return null;
+                return 0;
             }
 
-            movies.Remove(movie);
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
 
-            return movies;
+            return movieId;
         }
 
-        public List<Movie> GetAllMovies()
+        public async Task<List<Movie>> GetAllMovies()
         {
-            return movies;
+            var moviesTest = await _context.Movies.ToListAsync();
+            return moviesTest;
         }
 
-        public Movie? GetMovieById(int id)
+        public async Task<Movie?> GetMovieById(int id)
         {
-            return movies.Find(x => x.MovieId == id);
+            var movie = await _context.Movies.FindAsync(id);
+
+            if (movie == null)
+                return null;
+
+            return movie;
         }
 
-        public List<Movie>? UpdateMovie(int movieId, Movie request)
+        public async Task<Movie> UpdateMovie(int movieId, Movie request)
         {
-            var movie = movies.Find(x => x.MovieId == movieId);
+            var movie = await _context.Movies.FindAsync(movieId);
 
             if (movie == null)
             {
@@ -67,7 +60,9 @@
             movie.Year = request.Year;
             //movie.MovieGenres = request.MovieGenres;
 
-            return movies;
+            await _context.SaveChangesAsync();
+
+            return movie;
         }
     }
 }

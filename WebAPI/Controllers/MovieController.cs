@@ -17,13 +17,13 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Movie>>> GetAllMovies()
         {
-            return _movieService.GetAllMovies();
+            return await _movieService.GetAllMovies();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovieById(int id)
         {
-            var result = _movieService.GetMovieById(id);
+            var result = await _movieService.GetMovieById(id);
 
             if (result == null)
             {
@@ -34,15 +34,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Movie>>> AddMovie(Movie movie)
+        public async Task<ActionResult<Movie>> AddMovie(Movie movie)
         {
-            return _movieService.AddMovie(movie);
+            return await _movieService.AddMovie(movie);
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Movie>>> UpdateMovie(int movieId, Movie request)
+        public async Task<ActionResult<Movie>> UpdateMovie(int movieId, Movie request)
         {
-            var result = _movieService.UpdateMovie(movieId, request);
+            var result = await _movieService.UpdateMovie(movieId, request);
 
             if (result == null)
             {
@@ -53,11 +53,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<List<Movie>>> DeleteMovie(int movieId)
+        public async Task<ActionResult<int>> DeleteMovie(int movieId)
         {
-            var result = _movieService.DeleteMovie(movieId);
+            var result = await _movieService.DeleteMovie(movieId);
 
-            if (result == null)
+            if (result == 0)
             {
                 return NotFound("Movie not found. Could not delete.");
             }
