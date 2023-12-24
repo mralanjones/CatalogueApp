@@ -7,6 +7,6 @@ namespace WebAPI.Models
         [Key]
         public int GenreId { get; set; }
         public string Name { get; set; } = null!;
-        public ICollection<MovieGenre> ?MovieGenres { get; set; }
+        //public ICollection<MovieGenre> ?MovieGenres { get; set; }
     }
 }

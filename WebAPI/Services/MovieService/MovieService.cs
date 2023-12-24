@@ -9,12 +9,12 @@
             _context = context;
         }
 
-        public async Task<Movie> AddMovie(Movie movie)
+        public async Task<Movie> CreateMovieAsync(Movie model)
         {
-            _context.Movies.Add(movie);
+            _context.Movies.Add(model);
             await _context.SaveChangesAsync();
 
-            return movie;
+            return model;
         }
 
         public async Task<int> DeleteMovie(int movieId)
@@ -32,13 +32,14 @@
             return movieId;
         }
 
-        public async Task<List<Movie>> GetAllMovies()
+        // TODO: change to filter rather than get all.
+        public async Task<IEnumerable<Movie>> GetAllMovies()
         {
             var moviesTest = await _context.Movies.ToListAsync();
             return moviesTest;
         }
 
-        public async Task<Movie?> GetMovieById(int id)
+        public async Task<Movie> GetMovieAsync(int id)
         {
             var movie = await _context.Movies.FindAsync(id);
 
@@ -48,16 +49,12 @@
             return movie;
         }
 
-        public async Task<Movie> UpdateMovie(int movieId, Movie request)
+        public async Task<Movie> UpdateMovieAsync(Movie model)
         {
-            var movie = await _context.Movies.FindAsync(movieId);
+            var movie = await _context.Movies.FindAsync(model.MovieId);
 
-            if (movie == null)
-            {
-                return null;
-            }
-            movie.Name = request.Name;
-            movie.Year = request.Year;
+            movie.Name = model.Name;
+            movie.Year = model.Year;
             //movie.MovieGenres = request.MovieGenres;
 
             await _context.SaveChangesAsync();

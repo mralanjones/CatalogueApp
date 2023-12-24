@@ -14,55 +14,43 @@ namespace WebAPI.Controllers
             _movieService = movieService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Movie>>> GetAllMovies()
-        {
-            return await _movieService.GetAllMovies();
-        }
+        //[HttpGet("filter")]
+        //public async Task<IActionResult> FilterAsync([FromQuery] PagedCollectionFilter filter)
+        //{
+        //    var model = await _movieService.FilterMoviesAsync(filter);
+
+        //    return Ok(model);
+        //}
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Movie>> GetMovieById(int id)
+        public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await _movieService.GetMovieById(id);
+            var model = await _movieService.GetMovieAsync(id);
 
-            if (result == null)
-            {
-                return NotFound("Movie not found.");
-            }
-
-            return Ok(result);
+            return Ok(model);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Movie>> AddMovie(Movie movie)
+        [HttpPost("")]
+        public async Task<IActionResult> PostMovie([FromBody]Movie model)
         {
-            return await _movieService.AddMovie(movie);
+            model = await _movieService.CreateMovieAsync(model);
+            return Ok(model);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Movie>> UpdateMovie(int movieId, Movie request)
+        [HttpPut("")]
+        public async Task<IActionResult> PutMovie([FromBody]Movie model)
         {
-            var result = await _movieService.UpdateMovie(movieId, request);
+            model = await _movieService.UpdateMovieAsync(model);
 
-            if (result == null)
-            {
-                return NotFound("Movie not found. Could not update.");
-            }
-
-            return Ok(result);
+            return Ok(model);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<int>> DeleteMovie(int movieId)
+        [HttpDelete("")]
+        public async Task<IActionResult> DeleteAsync(int movieId)
         {
-            var result = await _movieService.DeleteMovie(movieId);
+            var model = await _movieService.DeleteMovie(movieId);
 
-            if (result == 0)
-            {
-                return NotFound("Movie not found. Could not delete.");
-            }
-
-            return Ok(result);
+            return Ok(model);
         }
     }
 }

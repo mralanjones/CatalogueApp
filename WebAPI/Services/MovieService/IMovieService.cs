@@ -2,10 +2,10 @@
 {
     public interface IMovieService
     {
-        Task<List<Movie>> GetAllMovies();
-        Task<Movie?> GetMovieById(int id);
-        Task<Movie> AddMovie(Movie movie);
-        Task<Movie> UpdateMovie(int movieId, Movie request);
+        Task<IEnumerable<Movie>> GetAllMovies();
+        Task<Movie> GetMovieAsync(int id);
+        Task<Movie> CreateMovieAsync(Movie model);
+        Task<Movie> UpdateMovieAsync(Movie model);
         Task<int> DeleteMovie(int movieId);
     }
 }
