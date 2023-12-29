@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Services.ActorService
+﻿namespace WebAPI.Services.Contracts
 {
     public interface IActorService
     {

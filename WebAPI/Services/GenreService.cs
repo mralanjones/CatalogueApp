@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Services.GenreService
+﻿using WebAPI.Services.Contracts;
+
+namespace WebAPI.Services
 {
     public class GenreService : IGenreService
     {

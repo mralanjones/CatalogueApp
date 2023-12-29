@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebAPI.Services.GenreService;
+using WebAPI.Services.Contracts;
 
 namespace WebAPI.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Services.GenreService
+﻿namespace WebAPI.Services.Contracts
 {
     public interface IGenreService
     {

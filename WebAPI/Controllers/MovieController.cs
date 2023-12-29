@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Services.MovieService;
+using WebAPI.Services.Contracts;
 
 namespace WebAPI.Controllers
 {

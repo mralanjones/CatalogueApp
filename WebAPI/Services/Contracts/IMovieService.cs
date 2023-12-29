@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Services.MovieService
+﻿namespace WebAPI.Services.Contracts
 {
     public interface IMovieService
     {

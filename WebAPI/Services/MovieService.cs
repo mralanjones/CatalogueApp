@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Services.MovieService
+﻿using WebAPI.Services.Contracts;
+
+namespace WebAPI.Services
 {
     public class MovieService : IMovieService
     {
@@ -42,9 +44,6 @@
         public async Task<Movie> GetMovieAsync(int id)
         {
             var movie = await _context.Movies.FindAsync(id);
-
-            if (movie == null)
-                return null;
 
             return movie;
         }

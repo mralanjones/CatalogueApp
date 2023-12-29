@@ -1,8 +1,8 @@
 global using WebAPI.Models;
 global using Microsoft.EntityFrameworkCore;
 global using WebAPI.Data;
-using WebAPI.Services.MovieService;
-
+using WebAPI.Services.Contracts;
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
