@@ -5,34 +5,35 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenreController : ControllerBase
+    public class ActorController : ControllerBase
     {
-        private readonly IGenreService _genreService;
-        public GenreController(IGenreService genreService)
+        private readonly IActorService _actorService;
+
+        public ActorController(IActorService actorService)
         {
-            _genreService = genreService;
+            _actorService = actorService;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var model = await _genreService.GetGenreAsync(id);
+            var model = await _actorService.GetActorAsync(id);
 
             return Ok(model);
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> PostMovie([FromBody] Genre model)
+        public async Task<IActionResult> PostActor([FromBody] Actor model)
         {
-            model = await _genreService.CreateGenreAsync(model);
+            model = await _actorService.CreateActorAsync(model);
 
             return Ok(model);
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> PutMovie([FromBody] Genre model)
+        public async Task<IActionResult> PutActor([FromBody] Actor model)
         {
-            model = await _genreService.UpdateGenreAsync(model);
+            model = await _actorService.UpdateActorAsync(model);
 
             return Ok(model);
         }
@@ -40,7 +41,7 @@ namespace WebAPI.Controllers
         [HttpDelete("")]
         public async Task<IActionResult> DeleteAsync(int movieId)
         {
-            await _genreService.DeleteGenreAsync(movieId);
+            await _actorService.DeleteActorAsync(movieId);
 
             return Ok();
         }

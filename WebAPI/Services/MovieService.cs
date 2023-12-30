@@ -19,19 +19,12 @@ namespace WebAPI.Services
             return model;
         }
 
-        public async Task<int> DeleteMovie(int movieId)
+        public async Task DeleteMovie(int movieId)
         {
             var movie = await _context.Movies.FindAsync(movieId);
 
-            if (movie == null)
-            {
-                return 0;
-            }
-
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
-
-            return movieId;
         }
 
         // TODO: change to filter rather than get all.

@@ -2,10 +2,10 @@
 {
     public interface IGenreService
     {
-        Task<Genre> GetGenreAsync(int id);
+        Task<Genre> GetGenreAsync(int genreId);
         Task<Genre> CreateGenreAsync(Genre model);
         Task<Genre> UpdateGenreAsync(Genre model);
-        Task<int> DeleteGenreAsync(int movieId);
+        Task DeleteGenreAsync(int genreId);
         Task<IEnumerable<Genre>> FilterAsync();
     }
 }

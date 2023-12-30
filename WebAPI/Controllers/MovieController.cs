@@ -48,9 +48,9 @@ namespace WebAPI.Controllers
         [HttpDelete("")]
         public async Task<IActionResult> DeleteAsync(int movieId)
         {
-            var model = await _movieService.DeleteMovie(movieId);
+            await _movieService.DeleteMovie(movieId);
 
-            return Ok(model);
+            return Ok();
         }
     }
 }

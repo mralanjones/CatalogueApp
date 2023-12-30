@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebAPI.Services.Contracts;
+﻿using WebAPI.Services.Contracts;
 
 namespace WebAPI.Services
 {

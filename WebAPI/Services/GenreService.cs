@@ -1,17 +1,31 @@
-﻿using WebAPI.Services.Contracts;
+﻿using WebAPI.Models;
+using WebAPI.Services.Contracts;
 
 namespace WebAPI.Services
 {
     public class GenreService : IGenreService
     {
-        public Task<Genre> CreateGenreAsync(Genre model)
+        private readonly DataContext _context;
+
+        public GenreService(DataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<int> DeleteGenreAsync(int movieId)
+        public async Task<Genre> CreateGenreAsync(Genre model)
         {
-            throw new NotImplementedException();
+            _context.Genres.Add(model);
+            await _context.SaveChangesAsync();
+
+            return model;
+        }
+
+        public async Task DeleteGenreAsync(int genreId)
+        {
+            var genre = await _context.Genres.FindAsync(genreId);
+
+            _context.Genres.Remove(genre);
+            await _context.SaveChangesAsync();
         }
 
         public Task<IEnumerable<Genre>> FilterAsync()
@@ -19,14 +33,21 @@ namespace WebAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<Genre> GetGenreAsync(int id)
+        public async Task<Genre> GetGenreAsync(int genreId)
         {
-            throw new NotImplementedException();
+            var genre = await _context.Genres.FindAsync(genreId);
+
+            return genre;
         }
 
-        public Task<Genre> UpdateGenreAsync(Genre model)
+        public async Task<Genre> UpdateGenreAsync(Genre model)
         {
-            throw new NotImplementedException();
+            var genre = await _context.Genres.FindAsync(model.GenreId);
+
+            genre.Name = model.Name;
+            await _context.SaveChangesAsync();
+
+            return genre;
         }
     }
 }
