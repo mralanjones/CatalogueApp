@@ -33,14 +33,22 @@ namespace WebAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<Actor> GetActorAsync(int id)
+        public async Task<Actor> GetActorAsync(int id)
         {
-            throw new NotImplementedException();
+            var movie = await _context.Actors.FindAsync(id);
+
+            return movie;
         }
 
-        public Task<Actor> UpdateActorAsync(Actor model)
+        public async Task<Actor> UpdateActorAsync(Actor model)
         {
-            throw new NotImplementedException();
+            var actor = await _context.Actors.FindAsync(model.ActorId);
+
+            actor.Name = model.Name;
+
+            await _context.SaveChangesAsync();
+
+            return model;
         }
     }
 }
