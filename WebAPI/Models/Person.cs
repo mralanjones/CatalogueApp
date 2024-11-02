@@ -2,10 +2,10 @@
 
 namespace WebAPI.Models
 {
-    public class Actor
+    public class Person
     {
         [Key]
-        public int ActorId { get; set; }
+        public int PersonId { get; set; }
         public string Name { get; set; } = null!;
     }
 }
